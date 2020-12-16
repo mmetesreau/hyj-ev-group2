@@ -50,6 +50,25 @@ let ``Play card with neither same rank nor same suit`` () =
 [<Fact>]
 let ``Play valid card wrong player`` () = 
     [ GameStarted { Players = players 4; FirstCard = Three $ Club } ]
-    => Play { Card = Four $ Diamond; Player = Player 4  }
-    =! [ WrongPlayerPlayed { Card = Four $ Diamond; Player = Player 4 } ]
+    => Play { Card = Four $ Diamond; Player = Player 2  }
+    =! [ WrongPlayerPlayed { Card = Four $ Diamond; Player = Player 2 } ]
 
+[<Fact>]
+let ``Player 2 after player 1`` () = 
+    [ 
+        GameStarted { Players = players 4; FirstCard = Three $ Club }
+        CardPlayed { Card = Four $ Diamond; Player = Player 1   }
+    ]
+    => Play { Card = Four $ Club; Player = Player 2  }
+    =! [ CardPlayed { Card = Four $ Club; Player = Player 2  } ]
+
+[<Fact>]
+let ``Player 0 after player 4`` () = 
+    [ 
+        GameStarted { Players = players 4; FirstCard = Three $ Club }
+        CardPlayed { Card = Four $ Diamond; Player = Player 1   }
+        CardPlayed { Card = Five $ Diamond; Player = Player 2   }
+        CardPlayed { Card = Five $ Club; Player = Player 3   }
+    ]
+    => Play { Card = Ace $ Club; Player = Player 0  }
+    =! [ CardPlayed { Card = Ace $ Club; Player = Player 0  } ]

@@ -11,3 +11,4 @@
 ## Step 3
 
 - [x] Seul le joueur courant peut jouer une carte
+- [x] Seul le joueur n+1 peut jouer une carte après le joueur n
