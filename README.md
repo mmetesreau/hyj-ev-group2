@@ -2,7 +2,7 @@
 
 ## Step 1
 
-- [x] On ne peut pas démarrer une partie deux fois
+- [x] La partie ne peut démarrer qu'une fois
 
 ## Step 2
 
@@ -12,3 +12,9 @@
 
 - [x] Seul le joueur courant peut jouer une carte
 - [x] Seul le joueur n+1 peut jouer une carte après le joueur n
+
+## Step 4
+
+- [x] Après un 7, le joueur suivant est sauté
+- [x] Après un Valet, le sens est inversé
+- [x] N'importe quel joueur peut jouer une carte identique à celle du dessus
