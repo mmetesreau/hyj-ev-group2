@@ -13,8 +13,8 @@ let (=>) (events: Event list) (cmd: Command) : Event list =
 [<Fact>]
 let ``Game not started should start`` () =
     [ ] 
-        => StartGame { Players = players 4 }
-        =! [ GameStarted { Players = players 4 } ]
+        => StartGame { Players = players 4; FirstCard = Three $ Club  }
+        =! [ GameStarted { Players = players 4; FirstCard = Three $ Club  } ]
 
 [<Fact>]
 let ``It's not fun to play alone`` () =
@@ -25,6 +25,6 @@ let ``Only one start`` () =
     raises<GameAlreadyStarted>
         <@
             [
-                GameStarted { Players = players 4}
-            ] => StartGame { Players = players 4 } 
+                GameStarted { Players = players 4; FirstCard = Three $ Club }
+            ] => StartGame { Players = players 4; FirstCard = Three $ Club  } 
         @>

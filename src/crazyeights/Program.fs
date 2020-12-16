@@ -3,6 +3,29 @@ module CrazyEights
 
 open System
 
+type Rank = 
+    | Ace
+    | Two
+    | Three
+    | Four
+    | Five
+    | Six
+    | Seven
+    | Height
+    | Nine
+    | Ten
+    | Jack
+    | Queen
+    | King
+
+type Suit = Club | Spade | Diamond | Heart
+
+type Card = {
+    Rank: Rank
+    Suit: Suit }
+
+let ($) rank suit = { Rank = rank; Suit = suit }
+
 [<Struct>]
 type Players = private Players of int
 
@@ -22,13 +45,18 @@ let players n =
         
 type Command = 
     | StartGame of StartGame
+    | Play of Play
 and StartGame = 
-    { Players: Players }
+    { Players: Players 
+      FirstCard: Card }
+and Play = 
+    { Card : Card }
 
 type Event = 
     | GameStarted of GameStarted
 and GameStarted = 
-    { Players: Players }
+    { Players: Players
+      FirstCard: Card  }
 
 type State = 
     | NotStarted
@@ -39,7 +67,7 @@ let initialState = NotStarted
 let decide (cmd: Command) (state: State) : Event list = 
     match state, cmd with
     | NotStarted, StartGame c ->
-        [ GameStarted { Players = c.Players }]
+        [ GameStarted { Players = c.Players; FirstCard = c.FirstCard }]
     | Started, StartGame _ -> raise GameAlreadyStarted
 
 let evolve (state: State) (event: Event) : State = 
