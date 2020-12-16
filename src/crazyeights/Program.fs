@@ -54,13 +54,20 @@ and Play =
 
 type Event = 
     | GameStarted of GameStarted
+    | CardPlayed of CardPlayed
+    | WrongCardPlayed of CardPlayed
 and GameStarted = 
     { Players: Players
       FirstCard: Card  }
+and CardPlayed = {
+    Card: Card }
 
 type State = 
     | NotStarted
-    | Started
+    | Started of Started
+and Started = {
+    TopCard: Card
+}
 
 let initialState = NotStarted
 
@@ -68,11 +75,16 @@ let decide (cmd: Command) (state: State) : Event list =
     match state, cmd with
     | NotStarted, StartGame c ->
         [ GameStarted { Players = c.Players; FirstCard = c.FirstCard }]
-    | Started, StartGame _ -> raise GameAlreadyStarted
+    | Started s, StartGame _ -> raise GameAlreadyStarted
+    | NotStarted, Play c -> []
+    | Started s, Play c when s.TopCard.Rank = c.Card.Rank || s.TopCard.Suit = c.Card.Suit -> 
+        [ CardPlayed { Card = c.Card } ]
+    | Started s, Play c -> [WrongCardPlayed { Card = c.Card } ]
 
 let evolve (state: State) (event: Event) : State = 
     match event with
-    | GameStarted _ -> Started
+    | GameStarted e -> Started { TopCard = e.FirstCard }
+    | CardPlayed e -> Started { TopCard = e.Card }
 
 // Define a function to construct a message to print
 let from whom =

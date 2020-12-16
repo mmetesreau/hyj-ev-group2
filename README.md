@@ -2,5 +2,8 @@
 
 ## Step 1
 
-- [x] On ne doit pas pouvoir démarrer un Game deux fois
+- [x] On ne peut pas démarrer une partie deux fois
 
+## Step 2
+
+- [x] On ne peut jouer qu'une carte de la meme couleur ou de la meme valeur
