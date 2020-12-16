@@ -32,17 +32,24 @@ let ``Only one start`` () =
 [<Fact>]
 let ``Play card with same rank`` () = 
    [ GameStarted { Players = players 4; FirstCard = Three $ Club } ]
-        => Play { Card = Three $ Diamond }
-        =! [ CardPlayed { Card = Three $ Diamond } ]
+        => Play { Card = Three $ Diamond; Player = Player 1 }
+        =! [ CardPlayed { Card = Three $ Diamond; Player = Player 1 } ]
 
 [<Fact>]
 let ``Play card with same suit`` () = 
    [ GameStarted { Players = players 4; FirstCard = Three $ Club } ]
-        => Play { Card = Four $ Club  }
-        =! [ CardPlayed { Card = Four $ Club } ]
+        => Play { Card = Four $ Club; Player = Player 1  }
+        =! [ CardPlayed { Card = Four $ Club; Player = Player 1 } ]
 
 [<Fact>]
 let ``Play card with neither same rank nor same suit`` () = 
     [ GameStarted { Players = players 4; FirstCard = Three $ Club } ]
-    => Play { Card = Four $ Diamond  }
-    =! [ WrongCardPlayed { Card = Four $ Diamond } ]
+    => Play { Card = Four $ Diamond; Player = Player 1  }
+    =! [ WrongCardPlayed { Card = Four $ Diamond; Player = Player 1 } ]
+
+[<Fact>]
+let ``Play valid card wrong player`` () = 
+    [ GameStarted { Players = players 4; FirstCard = Three $ Club } ]
+    => Play { Card = Four $ Diamond; Player = Player 4  }
+    =! [ WrongPlayerPlayed { Card = Four $ Diamond; Player = Player 4 } ]
+

@@ -6,4 +6,8 @@
 
 ## Step 2
 
-- [x] On ne peut jouer qu'une carte de la meme couleur ou de la meme valeur
+- [x] Un joueur ne peut jouer qu'une carte de la meme couleur ou de la meme valeur
+
+## Step 3
+
+- [x] Seul le joueur courant peut jouer une carte
